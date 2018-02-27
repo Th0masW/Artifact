@@ -5,4 +5,5 @@ package com.example.thomas.artifact;
  */
 
 public class ExampleUnitTest {
+
 }
