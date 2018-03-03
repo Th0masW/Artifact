@@ -28,6 +28,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="@android:color/holo_blue_dark"
+        android:onClick="openReviewEvidence"
         android:text="@string/app_review"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"

@@ -20,8 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void openEvidenceCapture(View view) {
         startActivity(new Intent(MainActivity.this, CaptureMyEvidence.class));
-
     }
-
+    public void openReviewEvidence(View view) {
+        startActivity(new Intent(MainActivity.this, ReviewEvidence.class));
+    }
 
 }

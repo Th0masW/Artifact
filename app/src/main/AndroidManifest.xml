@@ -16,7 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CaptureMyEvidence"></activity>
+        <activity android:name=".CaptureMyEvidence" />
+        <activity android:name=".ReviewEvidence" />
+        <activity android:name=".GetVideo" />
+        <activity android:name=".GetAudio" />
+        <activity android:name=".GetPicture"></activity>
     </application>
 
 </manifest>
