@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.thomas.artifact.MainActivity">
+    tools:context="com.example.thomas.artifact.CaptureMyEvidence">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button3"
         android:layout_width="0dp"
-        android:layout_height="246dp"
+        android:layout_height="200px"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:onClick="openEvidenceCapture"
-        android:text="@string/app_capture"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:text="@string/get_video"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -22,18 +21,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button4"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="200px"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:text="@string/app_review"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:text="@string/get_audio"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="0dp"
+        android:layout_height="200px"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:text="@string/get_picture"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
 </android.support.constraint.ConstraintLayout>
