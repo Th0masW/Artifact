@@ -6,4 +6,8 @@
     <string name="get_video">Grab Video</string>
     <string name="get_audio">Record Audio</string>
     <string name="get_picture">Snap Picture</string>
+    <string name="Artifact_logo_text" translatable="false">Artifact App</string>
+    <string name="login_btn">Login</string>
+    <string name="password_btn">Password</string>
+    <string name="email_btn">Your email address</string>
 </resources>

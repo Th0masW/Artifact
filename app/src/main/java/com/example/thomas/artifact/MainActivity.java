@@ -20,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
         int i;
         doSomething();
 
+        //create login intent
+        Intent intent = new Intent(MainActivity.this, Login.class);
+    startActivity(intent);
+
     }
 
     public void openEvidenceCapture(View view) {

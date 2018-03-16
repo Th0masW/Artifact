@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "409732576265",
-    "firebase_url": "https://artifact-dd7e9.firebaseio.com",
-    "project_id": "artifact-dd7e9",
-    "storage_bucket": "artifact-dd7e9.appspot.com"
+    "project_number": "715296757715",
+    "firebase_url": "https://artifact-c6ae0.firebaseio.com",
+    "project_id": "artifact-c6ae0",
+    "storage_bucket": "artifact-c6ae0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:409732576265:android:1c7be194ae55989d",
+        "mobilesdk_app_id": "1:715296757715:android:1c7be194ae55989d",
         "android_client_info": {
           "package_name": "com.example.thomas.artifact"
         }
       },
       "oauth_client": [
         {
-          "client_id": "409732576265-8b9mjvj6bi5j6h7krn0r3llv4habmv5r.apps.googleusercontent.com",
+          "client_id": "715296757715-ac37lq2j40j99u02csmliio8ejsa7mkd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.thomas.artifact",
+            "certificate_hash": "39615a4171bda50159dffb620c5b300f1ab5a972"
+          }
+        },
+        {
+          "client_id": "715296757715-dvergfr8faa0capsfprd2j7aqff0g38o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCV89TfONetnCREA-0kpqQ6o6rEfp5t718"
+          "current_key": "AIzaSyBrc5sL-L2mes1uZMtvOvPZvWIVijAPeNU"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715296757715-dvergfr8faa0capsfprd2j7aqff0g38o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
