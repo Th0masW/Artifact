@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, ReviewEvidence.class));
     }
 
+    public void openAddStudents(View view) {
+        startActivity(new Intent(MainActivity.this, AddStudents.class));
+    }
+
     private void doSomething() {
         String tag = "Do Something";
         String msg = "Say something";

@@ -37,11 +37,13 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        loginEmailText = (EditText) findViewById(R.id.login_email);
-        loginPasswordText = (EditText) findViewById(R.id.login_password);
-        loginBtn = (Button) findViewById(R.id.login_btn);
-        loginProgress = (ProgressBar) findViewById(R.id.progressBar);
-        //clicking the login button to validte
+
+        loginEmailText = findViewById(R.id.login_email);
+        loginPasswordText = findViewById(R.id.login_password);
+        loginBtn = findViewById(R.id.login_btn);
+        loginProgress = findViewById(R.id.login_progress);
+        //clicking the login button to validate
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,7 +84,7 @@ public class Login extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         //Check if user is logged in, if so, send to main
-        if(currentUser == null) {
+        if(currentUser != null) {
             sendToMain();
         }
     }

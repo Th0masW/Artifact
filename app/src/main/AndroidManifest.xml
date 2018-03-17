@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,8 +25,10 @@
         <activity android:name=".GetVideo" />
         <activity android:name=".GetAudio" />
         <activity android:name=".GetPicture" />
-        <activity android:name=".Login"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Login"
+            android:screenOrientation="portrait" />
+        <activity android:name=".AddStudents"></activity>
     </application>
 
 </manifest>

@@ -10,4 +10,8 @@
     <string name="login_btn">Login</string>
     <string name="password_btn">Password</string>
     <string name="email_btn">Your email address</string>
+    <string name="add_student_btn">Add Students</string>
+    <string name="Add_students_header">Add Students</string>
+    <string name="add_students_textbox">Student name...</string>
+    <string name="add_students_btn">Submit Student Name</string>
 </resources>
