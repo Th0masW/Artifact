@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 // thomas was here
 // and again  ....
 
@@ -20,11 +23,22 @@ public class MainActivity extends AppCompatActivity {
         int i;
         doSomething();
 
-        //create login intent
-        Intent intent = new Intent(MainActivity.this, Login.class);
-    startActivity(intent);
-
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(currentUser == null) {
+            //create login intent
+            Intent loginIntent = new Intent(MainActivity.this, Login.class);
+            startActivity(loginIntent);
+            finish();
+        }
+    }
+
 
     public void openEvidenceCapture(View view) {
         startActivity(new Intent(MainActivity.this, CaptureMyEvidence.class));
