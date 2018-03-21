@@ -13,13 +13,19 @@ import com.google.firebase.auth.FirebaseUser;
 // thomas was here
 // and again  ....
 
+/**
+ * Description of Main Activity
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        /**
+         * This variable has no meaning
+         */
         int i;
         doSomething();
 
@@ -39,14 +45,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Opens Evidence Capture page
+     * @param view
+     */
     public void openEvidenceCapture(View view) {
         startActivity(new Intent(MainActivity.this, CaptureMyEvidence.class));
     }
+
+    /**
+     * Opens Review Evidence page
+     * @param view
+     */
     public void openReviewEvidence(View view) {
         startActivity(new Intent(MainActivity.this, ReviewEvidence.class));
     }
 
+    /**
+     * Opens Add Student page
+     * @param view
+     */
     public void openAddStudents(View view) {
         startActivity(new Intent(MainActivity.this, AddStudents.class));
     }
