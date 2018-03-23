@@ -115,7 +115,13 @@ public class GetPicture extends AppCompatActivity {
      * @param view
      */
     public void openSnapPicture(View view) {
-        startActivity(new Intent(GetPicture.this, SnapPicture.class));
+        // pass data
+        Intent intent = new Intent(GetPicture.this, SnapPicture.class);
+        intent.putExtra("name", studentName);
+        Log.v("Student name: ", studentName);
+        startActivity(intent);
+        // open activity
+        //startActivity(new Intent(GetPicture.this, SnapPicture.class));
     }
 
 

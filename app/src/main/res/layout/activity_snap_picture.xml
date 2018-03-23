@@ -51,6 +51,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginRight="24dp"
         android:background="@android:color/holo_red_light"
+        android:onClick="cancelBtn"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

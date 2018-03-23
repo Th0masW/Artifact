@@ -23,6 +23,7 @@ public class SnapPicture extends AppCompatActivity {
     Button save_btn;
     Button cancel_btn;
     Bitmap photo;
+    String studentName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,15 @@ public class SnapPicture extends AppCompatActivity {
         myImageView = (ImageView) findViewById(R.id.myImageView);
         save_btn = findViewById(R.id.saveBtn);
         cancel_btn = findViewById(R.id.cancelBtn);
+        // check for name
+        //name = findViewById(R.id)
+        Intent intent = getIntent();
+        if (null != intent) {
+            studentName = intent.getStringExtra("name");
+            // change title to name
+            setTitle("Student: " + studentName);
+        }
+
         // check for camera
         if(!hasCamera()) {
             myBtn.setEnabled(false);
@@ -115,5 +125,10 @@ public class SnapPicture extends AppCompatActivity {
             save_btn.setVisibility(View.INVISIBLE);
             cancel_btn.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void cancelBtn(View view) {
+        // open activity
+        startActivity(new Intent(SnapPicture.this, GetPicture.class));
     }
 }
