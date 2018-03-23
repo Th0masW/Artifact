@@ -14,4 +14,5 @@
     <string name="Add_students_header">Add Students</string>
     <string name="add_students_textbox">Student name...</string>
     <string name="add_students_btn">Submit Student Name</string>
+    <string name="ddl_student">None</string>
 </resources>

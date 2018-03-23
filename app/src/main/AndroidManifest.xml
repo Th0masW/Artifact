@@ -28,7 +28,8 @@
         <activity
             android:name=".Login"
             android:screenOrientation="portrait" />
-        <activity android:name=".AddStudents"></activity>
+        <activity android:name=".AddStudents" />
+        <activity android:name=".SnapPicture"></activity>
     </application>
 
 </manifest>

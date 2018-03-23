@@ -28,6 +28,7 @@ public class AddStudents extends AppCompatActivity {
     private Button add_students_btn;
     private DatabaseReference mDatabase;
     private DatabaseReference studentDB;
+    private DatabaseReference nameDB;
 
 // ...
     //mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -55,27 +56,7 @@ public class AddStudents extends AppCompatActivity {
         addStudentName = findViewById(R.id.add_student_text_box);
         studentGrade = findViewById(R.id.grade_text_box);
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
-
-
-        // Write a message to the database
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //DatabaseReference myRef = database.getReference("message");
-
-        //myRef.setValue("James Brown");
-
-
-
-        //add
-        /* BUG IN HERE
-        add_students_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              // submitPost();
-              //  addStudentName = findViewById(R.id.add_student_text_box);
-
-              //  mDatabase.child("artifact-c6ae0").child(String.valueOf(addStudentName));
-            }
-        }); */
+        nameDB = FirebaseDatabase.getInstance().getReference().child("Name");
     }
     public void addStudent(View view) {
         String name = addStudentName.getText().toString();
@@ -97,6 +78,8 @@ public class AddStudents extends AppCompatActivity {
                 }
             }
         });
+        // add name to Name in DB
+        nameDB.push().setValue(name);
     }
 
     private void writeNewUser(String userId, String name) {
