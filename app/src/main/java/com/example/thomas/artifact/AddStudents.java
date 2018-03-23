@@ -1,25 +1,34 @@
 package com.example.thomas.artifact;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.HashMap;
+
 public class AddStudents extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private EditText addStudentName;
+    private EditText studentGrade;
     private Button add_students_btn;
-
     private DatabaseReference mDatabase;
+    private DatabaseReference studentDB;
+
 // ...
     //mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -36,30 +45,28 @@ public class AddStudents extends AppCompatActivity {
         }
     }
 
-    private void writeNewUser(String userId, String name) {
-        Student student = new Student(name);
-        mDatabase.child("student").child(userId).setValue(student);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_students);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
         add_students_btn = findViewById(R.id.add_student_btn);
+        addStudentName = findViewById(R.id.add_student_text_box);
+        studentGrade = findViewById(R.id.grade_text_box);
+        studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
 
 
         // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //DatabaseReference myRef = database.getReference("message");
 
-        myRef.setValue("James Brown");
+        //myRef.setValue("James Brown");
 
 
-        
+
         //add
+        /* BUG IN HERE
         add_students_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,12 +74,34 @@ public class AddStudents extends AppCompatActivity {
               //  addStudentName = findViewById(R.id.add_student_text_box);
 
               //  mDatabase.child("artifact-c6ae0").child(String.valueOf(addStudentName));
+            }
+        }); */
+    }
+    public void addStudent(View view) {
+        String name = addStudentName.getText().toString();
+        String grade = studentGrade.getText().toString();
+        Log.v("AddStudents", "Student name: " + name);
+        Log.v("AddStudents", "Student grade: " + grade);
 
+        HashMap<String, String> datamap = new HashMap<String,String>();
+        datamap.put("Name", name);
+        datamap.put("Grade", grade);
 
+        studentDB.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(AddStudents.this,"Stored...", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(AddStudents.this,"Error...", Toast.LENGTH_LONG).show();
+                }
             }
         });
+    }
 
-
+    private void writeNewUser(String userId, String name) {
+        Student student = new Student(name);
+        mDatabase.child("student").child(userId).setValue(student);
     }
 
     @Override
