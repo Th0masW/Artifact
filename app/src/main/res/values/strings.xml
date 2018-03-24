@@ -12,7 +12,8 @@
     <string name="email_btn">Your email address</string>
     <string name="add_student_btn">Add Students</string>
     <string name="Add_students_header">Add Students</string>
-    <string name="add_students_textbox">Student name...</string>
+    <string name="add_students_textbox">Student name</string>
     <string name="add_students_btn">Submit Student Name</string>
     <string name="ddl_student">None</string>
+    <string name="edit_student_btn">Edit Student</string>
 </resources>
