@@ -120,8 +120,6 @@ public class GetPicture extends AppCompatActivity {
         intent.putExtra("name", studentName);
         Log.v("Student name: ", studentName);
         startActivity(intent);
-        // open activity
-        //startActivity(new Intent(GetPicture.this, SnapPicture.class));
     }
 
 
