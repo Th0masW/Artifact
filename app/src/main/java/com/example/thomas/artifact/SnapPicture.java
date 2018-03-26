@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,6 +43,7 @@ public class SnapPicture extends AppCompatActivity {
     String studentName;
     String fileLocation;
     EditText assignmentName;
+    TextView lblAssign;
     private DatabaseReference assignmentDB;
     private StorageReference mStorageRef;
 
@@ -57,6 +59,7 @@ public class SnapPicture extends AppCompatActivity {
         assignmentName = findViewById(R.id.assignName);
         assignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
         mStorageRef = FirebaseStorage.getInstance().getReference();
+        lblAssign = findViewById(R.id.labelAssign);
         // check for name
         //name = findViewById(R.id)
         Intent intent = getIntent();
@@ -72,6 +75,8 @@ public class SnapPicture extends AppCompatActivity {
         }
         // make save and cancel invisible
         buttonVisibility(false);
+        // make assignment invisible
+        assignmentVisibility(false);
         //save_btn.setVisibility(View.INVISIBLE);
         //cancel_btn.setVisibility(View.INVISIBLE);
     }
@@ -97,7 +102,7 @@ public class SnapPicture extends AppCompatActivity {
             myImageView.setImageBitmap(photo);
             // adjust button visibility
             buttonVisibility(true);
-
+            assignmentVisibility(true);
             // save picture
             //savePicture(photo);
         }
@@ -193,7 +198,9 @@ public class SnapPicture extends AppCompatActivity {
         // save locally
         savePicture(photo, fileLocation);
 
-
+        // disable assignment controls
+        assignmentVisibility(false);
+        buttonVisibility(false);
     }
     private void resetAssignment() {
         assignmentName.setText("");
@@ -232,13 +239,25 @@ public class SnapPicture extends AppCompatActivity {
 
     private void buttonVisibility(boolean x) {
         if (x == true) {
-            // make save and cancel invisible
+            // make save and cancel visible
             save_btn.setVisibility(View.VISIBLE);
             cancel_btn.setVisibility(View.VISIBLE);
         } else {
             // make save and cancel invisible
             save_btn.setVisibility(View.INVISIBLE);
             cancel_btn.setVisibility(View.INVISIBLE);
+        }
+    }
+    private void assignmentVisibility(boolean x) {
+        if (x == true) {
+            // make assignment options visible
+            lblAssign.setVisibility(View.VISIBLE);
+            assignmentName.setVisibility((View.VISIBLE));
+
+        } else {
+            // make save and cancel invisible
+            lblAssign.setVisibility(View.INVISIBLE);
+            assignmentName.setVisibility(View.INVISIBLE);
         }
     }
 
