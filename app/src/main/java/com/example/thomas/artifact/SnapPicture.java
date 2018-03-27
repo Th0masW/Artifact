@@ -41,11 +41,14 @@ public class SnapPicture extends AppCompatActivity {
     Button cancel_btn;
     Bitmap photo;
     String studentName;
+    String studentKey;
     String fileLocation;
     EditText assignmentName;
     TextView lblAssign;
     private DatabaseReference assignmentDB;
+    private DatabaseReference studentNode;
     private StorageReference mStorageRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +60,18 @@ public class SnapPicture extends AppCompatActivity {
         save_btn = findViewById(R.id.saveBtn);
         cancel_btn = findViewById(R.id.cancelBtn);
         assignmentName = findViewById(R.id.assignName);
+        studentNode = null;
         assignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
         mStorageRef = FirebaseStorage.getInstance().getReference();
         lblAssign = findViewById(R.id.labelAssign);
-        // check for name
-        //name = findViewById(R.id)
+        // get name and key from GetPicture activity
         Intent intent = getIntent();
         if (null != intent) {
+            // assign student name and key
             studentName = intent.getStringExtra("name");
+            studentKey = intent.getStringExtra("key");
+            studentNode = FirebaseDatabase.getInstance().getReference().child("Assignment/" + studentName);
+            Log.v("SnapPicture", "Name:" + studentName + ", key:" + studentKey);
             // change title to name
             setTitle("Student: " + studentName);
         }
@@ -77,8 +84,6 @@ public class SnapPicture extends AppCompatActivity {
         buttonVisibility(false);
         // make assignment invisible
         assignmentVisibility(false);
-        //save_btn.setVisibility(View.INVISIBLE);
-        //cancel_btn.setVisibility(View.INVISIBLE);
     }
 
     // check for camera
@@ -138,7 +143,7 @@ public class SnapPicture extends AppCompatActivity {
     private String shortenName(String name) {
         String shortName = name;
         shortName.trim();
-        shortName.replaceAll(" ", "");
+        shortName.replaceAll(" ", "_");
         return shortName;
     }
 
@@ -151,9 +156,10 @@ public class SnapPicture extends AppCompatActivity {
         String shortName = name;
         String fileName = null;
         shortName.trim();
-        shortName.replaceAll(" ", "");
+        shortName = shortName.replaceAll(" ", "_");
+        Log.v("RandomName","Short name:"+ shortName);
         Integer num = getRandomNumberInRange(1000,9999);
-        fileName = shortName + num.toString();
+        fileName = shortName + num.toString() + ".png";
         Log.v("RandomFIleName", fileName);
         return fileName;
     }
@@ -190,18 +196,51 @@ public class SnapPicture extends AppCompatActivity {
         // create file name
         fileLocation = randomFileName(studentName);
         // upload info to db
-        uploadToDB();
+        //uploadToDB();
+
+        // upload to student node TESTING
+        uploadToNode();
 
         // upload picture to db - not working
         //uploadToStorage();
 
         // save locally
-        savePicture(photo, fileLocation);
+        //savePicture(photo, fileLocation);
 
         // disable assignment controls
         assignmentVisibility(false);
         buttonVisibility(false);
     }
+
+    private void uploadToNode() {
+        String assName = assignmentName.getText().toString();
+        // check for name
+        if (!assName.isEmpty()) {
+            // upload
+            Assignment newAssign = new Pictures(studentName, assName, photo);
+            //String testMsg = "Student:" + newAssign.getStudentName() + ", Assignment:" + newAssign.getAssignmentName() + ", Date:" + newAssign.getDate();
+            newAssign.setFileName(fileLocation);
+            // save to firebase
+            HashMap<String, Assignment> datamap = new HashMap<String,Assignment>();
+            datamap.put(assName, newAssign);
+            //studentNode.setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            studentNode.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(SnapPicture.this,"Assignment Saved", Toast.LENGTH_LONG).show();
+                        // reset image and assignment name
+                        resetAssignment();
+                    } else {
+                        Toast.makeText(SnapPicture.this,"Error...Assignment Not Saved", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(this, "Missing: Assignment Name", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void resetAssignment() {
         assignmentName.setText("");
         myImageView.setImageBitmap(null);

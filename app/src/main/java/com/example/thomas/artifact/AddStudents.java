@@ -29,6 +29,7 @@ public class AddStudents extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private DatabaseReference studentDB;
     private DatabaseReference nameDB;
+    private Boolean allSaved;
 
 // ...
     //mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -57,29 +58,71 @@ public class AddStudents extends AppCompatActivity {
         studentGrade = findViewById(R.id.grade_text_box);
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
         nameDB = FirebaseDatabase.getInstance().getReference().child("Name");
+        allSaved = null;
     }
     public void addStudent(View view) {
         String name = addStudentName.getText().toString();
         String grade = studentGrade.getText().toString();
+
         Log.v("AddStudents", "Student name: " + name);
         Log.v("AddStudents", "Student grade: " + grade);
 
         HashMap<String, String> datamap = new HashMap<String,String>();
         datamap.put("Name", name);
         datamap.put("Grade", grade);
-
-        studentDB.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+        // add to "student" node
+        /*studentDB.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(AddStudents.this,"Stored...", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(AddStudents.this,"Stored...", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(AddStudents.this,"Error...", Toast.LENGTH_LONG).show();
+                    allSaved = false;
+                    //Toast.makeText(AddStudents.this,"Error...", Toast.LENGTH_LONG).show();
+                }
+            }
+        });*/
+        studentDB.push().setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    //Toast.makeText(AddStudents.this,"Stored...", Toast.LENGTH_LONG).show();
+                } else {
+                    allSaved = false;
+                    //Toast.makeText(AddStudents.this,"Error...", Toast.LENGTH_LONG).show();
                 }
             }
         });
         // add name to Name in DB
-        nameDB.push().setValue(name);
+        //nameDB.push().setValue(name);
+        nameDB.push().setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    //Toast.makeText(AddStudents.this,"Stored...", Toast.LENGTH_LONG).show();
+                } else {
+                    allSaved = false;
+                }
+            }
+        });
+        //add name as a node to use for assignments
+        mDatabase.push().setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                } else {
+                    allSaved = false;
+                }
+            }
+        });
+        // communicate if saved
+        if (allSaved== null) {
+            Toast.makeText(AddStudents.this,"Student has been added", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(AddStudents.this,"Error: student could not be added. " +
+                    "Make sure to use a unique name.", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void writeNewUser(String userId, String name) {

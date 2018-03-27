@@ -36,8 +36,11 @@ public class GetPicture extends AppCompatActivity {
     private DatabaseReference messageDB;
     private DatabaseReference nameDB;
     private ArrayList<String> mStudents = new ArrayList<>();
+    private ArrayList<StudentEntity> studentArray = new ArrayList<>();
     private ListView mListView;
     public String studentName;
+    public String studentKey;
+    public StudentEntity selectedStudent;
 
     private static final String TAG = "GetPicture";
 
@@ -47,6 +50,8 @@ public class GetPicture extends AppCompatActivity {
         setContentView(R.layout.activity_get_picture);
 
         studentName = null;
+        studentKey = null;
+        selectedStudent = null;
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
@@ -59,12 +64,19 @@ public class GetPicture extends AppCompatActivity {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, mStudents);
         mListView.setAdapter(arrayAdapter);
         // add to adapter
-        nameDB.addChildEventListener(new ChildEventListener() {
+        //nameDB.addChildEventListener(new ChildEventListener() { // this worked
+        studentDB.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String value = dataSnapshot.getValue(String.class);
-                mStudents.add(value);
+                String name = dataSnapshot.getValue(String.class);
+                String key = dataSnapshot.getKey();
+                mStudents.add(name);
                 arrayAdapter.notifyDataSetChanged();
+                // add student entity
+                //Log.v("GetPicture", "Student:" + name + ", Key:" + key);
+                StudentEntity student = new StudentEntity(key,name);
+                studentArray.add(student);
+                //Log.v("GetPicture", "Testing entity. N:" + student.getName() + ", k:" + student.getKey());
             }
 
             @Override
@@ -86,8 +98,9 @@ public class GetPicture extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Object item = mListView.getItemAtPosition(position);
                 studentName = item.toString();
-
-                Toast.makeText(GetPicture.this, "Selected :" + " " + studentName, Toast.LENGTH_LONG).show();
+                // get student key
+                StudentEntity myStudent = studentArray.get(position);
+                studentKey = myStudent.getKey();
             }
         });
 
@@ -98,6 +111,7 @@ public class GetPicture extends AppCompatActivity {
                                        int position, long id) {
                 // On selecting a spinner item
                 studentName = adapter.getItemAtPosition(position).toString();
+
                 // Showing selected spinner item
                 Toast.makeText(getApplicationContext(),
                         "You selected : " + studentName, Toast.LENGTH_SHORT).show();
@@ -118,6 +132,7 @@ public class GetPicture extends AppCompatActivity {
         // pass data
         Intent intent = new Intent(GetPicture.this, SnapPicture.class);
         intent.putExtra("name", studentName);
+        intent.putExtra("key", studentKey);
         Log.v("Student name: ", studentName);
         startActivity(intent);
     }
