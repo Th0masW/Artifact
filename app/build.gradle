@@ -38,4 +38,3 @@ dependencies {
 
 // for firebase
 apply plugin: 'com.google.gms.google-services'
-

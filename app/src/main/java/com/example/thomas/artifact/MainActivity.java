@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, AddStudents.class));
     }
 
+    public void openTest(View view) {
+        startActivity(new Intent(MainActivity.this, NodeTest.class));
+    }
     private void doSomething() {
         String tag = "Do Something";
         String msg = "Say something";
