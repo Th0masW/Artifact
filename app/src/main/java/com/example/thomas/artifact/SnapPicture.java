@@ -28,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -48,6 +49,8 @@ public class SnapPicture extends AppCompatActivity {
     private DatabaseReference assignmentDB;
     private DatabaseReference studentNode;
     private StorageReference mStorageRef;
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
 
 
     @Override
@@ -64,6 +67,8 @@ public class SnapPicture extends AppCompatActivity {
         assignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
         mStorageRef = FirebaseStorage.getInstance().getReference();
         lblAssign = findViewById(R.id.labelAssign);
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
         // get name and key from GetPicture activity
         Intent intent = getIntent();
         if (null != intent) {
@@ -165,31 +170,47 @@ public class SnapPicture extends AppCompatActivity {
     }
 
     private void uploadToStorage() {
-        //String shortName = shortenName(studentName);
-        String fileName = randomFileName(studentName);
-        //Uri myFile = photo.;
-        Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
+        String storagePath = storageRef.getPath();
+        Log.d("SnapPicture", "Storage path:"+storagePath);
+        StorageReference imagesRef = storageRef.child("images/" + fileLocation);
+        myImageView.setDrawingCacheEnabled(true);
+        myImageView.buildDrawingCache();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] data = baos.toByteArray();
+        UploadTask uploadTask = imagesRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SnapPicture.this,"Error! Could not upload picture.", Toast.LENGTH_LONG).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(SnapPicture.this,"Success! Picture has been uploaded.", Toast.LENGTH_LONG).show();
+            }
+        });
 
-        StorageReference riversRef = mStorageRef.child("images/" + fileName);
-
-        riversRef.putFile(file)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Get a URL to the uploaded content
-                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                        Toast.makeText(SnapPicture.this,"Photo stored", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        // ...
-                        Toast.makeText(SnapPicture.this,"Photo could not be stored", Toast.LENGTH_LONG).show();
-                    }
-                });
     }
+
+    private void savePicture(Bitmap photo, String fileName) {
+        try {
+            // Use the compress method on the Bitmap object to write image to
+            // the OutputStream
+            FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+
+            // Writing the bitmap to the output stream
+            photo.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+            Log.v("savePicture", "Image saved");
+
+            //return true;
+        } catch (Exception e) {
+            Log.e("savePicture()", e.getMessage());
+            //return false;
+        }
+    }
+
     public void submitImage(View view) {
         String assName = assignmentName.getText().toString();
         Log.v("SUBMIT IMAGE", "Assignment name:\"" + assName + "\"");
@@ -197,17 +218,18 @@ public class SnapPicture extends AppCompatActivity {
         fileLocation = randomFileName(studentName);
         // upload info to db
         //uploadToDB();
+        // save locally
+        //savePicture(photo, fileLocation);
 
         // upload to student node TESTING
         //uploadToNode(); // creates random generate node name... not ideal
         //uploadToNode2();  // create name for id and value as file
         uploadToNode3();
 
-        // upload picture to db - not working
-        //uploadToStorage();
+        //upload picture to db - not working
+        uploadToStorage();
 
-        // save locally
-        //savePicture(photo, fileLocation);
+
 
         // disable assignment controls
         assignmentVisibility(false);
@@ -313,23 +335,6 @@ public class SnapPicture extends AppCompatActivity {
     private void resetAssignment() {
         assignmentName.setText("");
         myImageView.setImageBitmap(null);
-    }
-    private void savePicture(Bitmap photo, String fileName) {
-        try {
-            // Use the compress method on the Bitmap object to write image to
-            // the OutputStream
-            FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
-
-            // Writing the bitmap to the output stream
-            photo.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.close();
-            Log.v("savePicture", "Image saved");
-
-            //return true;
-        } catch (Exception e) {
-            Log.e("savePicture()", e.getMessage());
-            //return false;
-        }
     }
 
     public void loadPicture(View view) {
