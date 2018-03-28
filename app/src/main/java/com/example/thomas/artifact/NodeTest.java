@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+//import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,22 +108,22 @@ public class NodeTest extends AppCompatActivity {
                 //String key = dataSnapshot.getKey();
                 //Log.v("NodeTest", "Jill Maybe Child: " + test);
                 // get nodes
-                List<Assignment> adsList = new ArrayList<>();
-                int cnt = 0;
+                List<Assignment> assList = new ArrayList<>();
                 for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
-                    String t = adSnapshot.toString();
+                    /*String t = adSnapshot.toString();
+                    String k = adSnapshot.getKey();
                     Log.d("NodeTest", "Assignment Class:"+t);
+                    Log.d("NodeTest", "Assignment Key:"+k); */
+                    Assignment a = adSnapshot.getValue(Assignment.class);
+                    //String testing = adSnapshot.child(k).getKey();
+                    //Log.d("NodeTest", "Assignment Key for "+k +" is:"+ testing);
+                    Log.d("NodeTest", "Ass name:" + a.getAssignmentName());
+                    assList.add(adSnapshot.getValue(Assignment.class));
+                    mAssignments.add(a.getAssignmentName());
 
-
-                    //adsList.add(adSnapshot.getValue(Assignment.class));
-                    //Assignment tempAssignment = adSnapshot.getValue(Assignment.class);
-                    //Log.d("NodeTest", "Assignment Class filename:"+tempAssignment.getFileName());
-                    //String temp = adSnapshot.getValue(String.class);
-                    //mAssignments.add(tempAssignment.getFileName());
-                    cnt++;
                 }
-                Log.d("NodeTest", "# of records of the search is "+adsList.size());
-                Log.d("NodeTest", "# of records of the search is "+ cnt);
+                Log.d("NodeTest", "# of records of the search is "+ assList.size());
+                //Log.d("NodeTest", "# of records of the search is "+ cnt);
 
                 ////////////////
                 //mAssignments.add(test);

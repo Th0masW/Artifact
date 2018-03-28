@@ -224,13 +224,14 @@ public class SnapPicture extends AppCompatActivity {
             newAssign.setFileName(fileLocation);
             // save to firebase
             HashMap<String, Assignment> datamap = new HashMap<String,Assignment>();
-            datamap.put(assName, newAssign);
+            //datamap.put(assName, newAssign);
+            datamap.put("Assignment",newAssign);
             //studentNode.setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
 
             //studentNode.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
             //                @Override
             //                public void onComplete(@NonNull Task<Void> task) {
-            assignmentDB.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            assignmentDB.push().setValue(newAssign).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
