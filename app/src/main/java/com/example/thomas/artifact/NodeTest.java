@@ -103,32 +103,16 @@ public class NodeTest extends AppCompatActivity {
         mAssignmentDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //String test = dataSnapshot.child("Jill Maybe").toString();
-                //String name = dataSnapshot.getValue(String.class);
-                //String key = dataSnapshot.getKey();
-                //Log.v("NodeTest", "Jill Maybe Child: " + test);
                 // get nodes
                 List<Assignment> assList = new ArrayList<>();
                 for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
-                    /*String t = adSnapshot.toString();
-                    String k = adSnapshot.getKey();
-                    Log.d("NodeTest", "Assignment Class:"+t);
-                    Log.d("NodeTest", "Assignment Key:"+k); */
                     Assignment a = adSnapshot.getValue(Assignment.class);
-                    //String testing = adSnapshot.child(k).getKey();
-                    //Log.d("NodeTest", "Assignment Key for "+k +" is:"+ testing);
                     Log.d("NodeTest", "Ass name:" + a.getAssignmentName());
                     assList.add(adSnapshot.getValue(Assignment.class));
                     mAssignments.add(a.getAssignmentName());
-
                 }
                 Log.d("NodeTest", "# of records of the search is "+ assList.size());
-                //Log.d("NodeTest", "# of records of the search is "+ cnt);
-
-                ////////////////
-                //mAssignments.add(test);
                 assignmentAdapter.notifyDataSetChanged();
-
             }
 
             @Override
