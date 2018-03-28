@@ -199,7 +199,9 @@ public class SnapPicture extends AppCompatActivity {
         //uploadToDB();
 
         // upload to student node TESTING
-        uploadToNode();
+        //uploadToNode(); // creates random generate node name... not ideal
+        //uploadToNode2();  // create name for id and value as file
+        uploadToNode3();
 
         // upload picture to db - not working
         //uploadToStorage();
@@ -210,6 +212,72 @@ public class SnapPicture extends AppCompatActivity {
         // disable assignment controls
         assignmentVisibility(false);
         buttonVisibility(false);
+    }
+
+    private void uploadToNode3() {
+        String assName = assignmentName.getText().toString();
+        // check for name
+        if (!assName.isEmpty()) {
+            // upload
+            Assignment newAssign = new Pictures(studentName, assName, photo);
+            //String testMsg = "Student:" + newAssign.getStudentName() + ", Assignment:" + newAssign.getAssignmentName() + ", Date:" + newAssign.getDate();
+            newAssign.setFileName(fileLocation);
+            // save to firebase
+            HashMap<String, Assignment> datamap = new HashMap<String,Assignment>();
+            datamap.put(assName, newAssign);
+            //studentNode.setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+            //studentNode.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            //                @Override
+            //                public void onComplete(@NonNull Task<Void> task) {
+            assignmentDB.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(SnapPicture.this,"Assignment Saved", Toast.LENGTH_LONG).show();
+                        // reset image and assignment name
+                        resetAssignment();
+                    } else {
+                        Toast.makeText(SnapPicture.this,"Error...Assignment Not Saved", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(this, "Missing: Assignment Name", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void uploadToNode2() {
+        String assName = assignmentName.getText().toString();
+        // check for name
+        if (!assName.isEmpty()) {
+            // upload
+            Assignment newAssign = new Pictures(studentName, assName, photo);
+            //String testMsg = "Student:" + newAssign.getStudentName() + ", Assignment:" + newAssign.getAssignmentName() + ", Date:" + newAssign.getDate();
+            newAssign.setFileName(fileLocation);
+            // save to firebase
+            HashMap<String, Assignment> datamap = new HashMap<String,Assignment>();
+            datamap.put(assName, newAssign);
+            //studentNode.setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+            //studentNode.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            //                @Override
+            //                public void onComplete(@NonNull Task<Void> task) {
+            studentNode.child(assName).setValue(fileLocation).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(SnapPicture.this,"Assignment Saved", Toast.LENGTH_LONG).show();
+                        // reset image and assignment name
+                        resetAssignment();
+                    } else {
+                        Toast.makeText(SnapPicture.this,"Error...Assignment Not Saved", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(this, "Missing: Assignment Name", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void uploadToNode() {

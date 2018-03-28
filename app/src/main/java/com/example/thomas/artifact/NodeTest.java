@@ -2,10 +2,13 @@ package com.example.thomas.artifact;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -13,17 +16,21 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NodeTest extends AppCompatActivity {
     private DatabaseReference studentDB;
-    private DatabaseReference messageDB;
+    private DatabaseReference mAssignmentDB;
     private DatabaseReference mDatabase;
     private DatabaseReference nameDB;
     private ArrayList<String> mStudents = new ArrayList<>();
+    private ArrayList<String> mAssignments = new ArrayList<>();
     private ArrayList<StudentEntity> studentArray = new ArrayList<>();
     private ListView mListView;
+    private ListView tabListView;
     public String studentName;
     public String studentKey;
     public StudentEntity selectedStudent;
@@ -37,7 +44,7 @@ public class NodeTest extends AppCompatActivity {
         selectedStudent = null;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
-        messageDB = FirebaseDatabase.getInstance().getReference().child("message");
+        mAssignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
         nameDB = FirebaseDatabase.getInstance().getReference().child("Name");
 
         // Populate listView
@@ -75,9 +82,58 @@ public class NodeTest extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Object item = mListView.getItemAtPosition(position);
                 studentName = item.toString();
+                loadView();
             }
         });
 
 
+    }
+    public void loadView() {
+
+        Toast.makeText(getApplicationContext(),
+                "You selected : " + studentName, Toast.LENGTH_SHORT).show();
+        // Populate listView
+        tabListView = findViewById(R.id.tabListView);
+
+        final ArrayAdapter<String> assignmentAdapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_expandable_list_item_1,
+                        mAssignments);
+        tabListView.setAdapter(assignmentAdapter);
+        mAssignmentDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //String test = dataSnapshot.child("Jill Maybe").toString();
+                //String name = dataSnapshot.getValue(String.class);
+                //String key = dataSnapshot.getKey();
+                //Log.v("NodeTest", "Jill Maybe Child: " + test);
+                // get nodes
+                List<Assignment> adsList = new ArrayList<>();
+                int cnt = 0;
+                for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
+                    String t = adSnapshot.toString();
+                    Log.d("NodeTest", "Assignment Class:"+t);
+
+
+                    //adsList.add(adSnapshot.getValue(Assignment.class));
+                    //Assignment tempAssignment = adSnapshot.getValue(Assignment.class);
+                    //Log.d("NodeTest", "Assignment Class filename:"+tempAssignment.getFileName());
+                    //String temp = adSnapshot.getValue(String.class);
+                    //mAssignments.add(tempAssignment.getFileName());
+                    cnt++;
+                }
+                Log.d("NodeTest", "# of records of the search is "+adsList.size());
+                Log.d("NodeTest", "# of records of the search is "+ cnt);
+
+                ////////////////
+                //mAssignments.add(test);
+                assignmentAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
