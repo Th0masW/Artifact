@@ -130,7 +130,7 @@ public class GetPicture extends AppCompatActivity {
     }
 
     /**
-     * Opens Add Student page
+     * Opens Snap Picture Student page
      * @param view
      */
     public void openSnapPicture(View view) {
