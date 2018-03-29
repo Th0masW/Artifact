@@ -118,6 +118,7 @@ public class AddStudents extends AppCompatActivity {
         // communicate if saved
         if (allSaved== null) {
             Toast.makeText(AddStudents.this,"Student has been added", Toast.LENGTH_LONG).show();
+            sendToMain();
         } else {
             Toast.makeText(AddStudents.this,"Error: student could not be added. " +
                     "Make sure to use a unique name.", Toast.LENGTH_LONG).show();
