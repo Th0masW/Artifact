@@ -1,5 +1,6 @@
 package com.example.thomas.artifact;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,8 @@ public class ReviewEvidence extends AppCompatActivity {
     private ListView tabListView;
     public String studentName;
     public String studentKey;
+    private String assignmentName;
+    private String fileName;
     public StudentEntity selectedStudent;
     private Spinner mSpinner;
     private ArrayAdapter<String> spinAdapter;
@@ -46,6 +49,8 @@ public class ReviewEvidence extends AppCompatActivity {
         studentName = null;
         studentKey = null;
         selectedStudent = null;
+        assignmentName = null;
+        fileName = null;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
         mAssignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
@@ -114,9 +119,6 @@ public class ReviewEvidence extends AppCompatActivity {
     }
 
     public void loadView() {
-
-        //Toast.makeText(getApplicationContext(),
-               // "You selected : " + studentName, Toast.LENGTH_SHORT).show();
         // Populate listView
         tabListView = findViewById(R.id.tabListView);
 
@@ -148,5 +150,39 @@ public class ReviewEvidence extends AppCompatActivity {
 
             }
         });
+
+        tabListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Object item = tabListView.getItemAtPosition(position);
+                 assignmentName = item.toString();
+                 // get file name
+                 assignFileName();
+            }
+        });
+    }
+    private void assignFileName(){
+        // iterate through assignment list
+        for(int i = 0; i < assignmentList.size(); i++) {
+            Assignment a = assignmentList.get(i);
+            String fn = a.getFileName();
+            String aN = a.getAssignmentName();
+            String sN = a.getStudentName();
+            Log.v("ReviewEvidence", "Student:"+ sN + ", file:" + fn);
+            if (aN == assignmentName) {
+                fileName = fn;
+            }
+        }
+    }
+    public void openViewAssignment(View view) {
+        // pass data
+        Intent intent = new Intent(ReviewEvidence.this, ViewAssignment.class);
+        intent.putExtra("name", studentName);
+        //intent.putExtra("key", studentKey);
+        intent.putExtra("assignment", assignmentName);
+        intent.putExtra("file", fileName);
+        //Log.v("Student name: ", studentName);
+        startActivity(intent);
     }
 }

@@ -30,7 +30,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".AddStudents" />
         <activity android:name=".SnapPicture" />
-        <activity android:name=".NodeTest"></activity>
+        <activity android:name=".NodeTest" />
+        <activity android:name=".ViewAssignment"></activity>
     </application>
 
 </manifest>

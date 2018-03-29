@@ -216,21 +216,11 @@ public class SnapPicture extends AppCompatActivity {
         Log.v("SUBMIT IMAGE", "Assignment name:\"" + assName + "\"");
         // create file name
         fileLocation = randomFileName(studentName);
-        // upload info to db
-        //uploadToDB();
-        // save locally
-        //savePicture(photo, fileLocation);
 
-        // upload to student node TESTING
-        //uploadToNode(); // creates random generate node name... not ideal
-        //uploadToNode2();  // create name for id and value as file
+        // upload to student node
         uploadToNode3();
-
-        //upload picture to db - not working
+        //upload picture to db
         uploadToStorage();
-
-
-
         // disable assignment controls
         assignmentVisibility(false);
         buttonVisibility(false);
@@ -242,22 +232,15 @@ public class SnapPicture extends AppCompatActivity {
         if (!assName.isEmpty()) {
             // upload
             Assignment newAssign = new Pictures(studentName, assName, photo);
-            //String testMsg = "Student:" + newAssign.getStudentName() + ", Assignment:" + newAssign.getAssignmentName() + ", Date:" + newAssign.getDate();
             newAssign.setFileName(fileLocation);
             // save to firebase
             HashMap<String, Assignment> datamap = new HashMap<String,Assignment>();
-            //datamap.put(assName, newAssign);
             datamap.put("Assignment",newAssign);
-            //studentNode.setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
-
-            //studentNode.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            //                @Override
-            //                public void onComplete(@NonNull Task<Void> task) {
             assignmentDB.push().setValue(newAssign).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(SnapPicture.this,"Assignment Saved", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SnapPicture.this,"Uploading Assignment...", Toast.LENGTH_LONG).show();
                         // reset image and assignment name
                         resetAssignment();
                     } else {

@@ -35,11 +35,14 @@ public class GetPicture extends AppCompatActivity {
     private DatabaseReference studentDB;
     private ArrayList<String> mStudents = new ArrayList<>();
     private ArrayList<StudentEntity> studentArray = new ArrayList<>();
+    private ArrayList<Assignment> assignmentArray = new ArrayList<>();
     private DatabaseReference assignmentDB;
     private ArrayList<String> mAssignments = new ArrayList<>();
     private ListView mListView;
     public String studentName;
     public String studentKey;
+    public String fileName;
+    public String assignmentName;
     public StudentEntity selectedStudent;
 
     private static final String TAG = "GetPicture";
@@ -51,6 +54,8 @@ public class GetPicture extends AppCompatActivity {
 
         studentName = null;
         studentKey = null;
+        assignmentName = null;
+        fileName = null;
         selectedStudent = null;
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -100,6 +105,7 @@ public class GetPicture extends AppCompatActivity {
                 // get student key
                 StudentEntity myStudent = studentArray.get(position);
                 studentKey = myStudent.getKey();
+
             }
         });
 
