@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
  */
 
 public class Pictures extends Assignment {
+    final static String ASSIGNMENT_TYPE = "PHOTO";
     private Bitmap photo;
 
     // Getters
@@ -20,6 +21,7 @@ public class Pictures extends Assignment {
         setStudentName(studentName);
         setAssignmentName(assignmentName);
         setPhoto(picture);
+        setType(ASSIGNMENT_TYPE);
     }
     Pictures() {}
 }

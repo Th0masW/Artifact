@@ -12,6 +12,7 @@ public class Assignment {
     private Date date;
     private String comments;
     private String fileName;
+    private String type;
 
     // Getters
     public String getStudentName(){return studentName;}
@@ -19,6 +20,7 @@ public class Assignment {
     public String getComments() {return comments;}
     public String getAssignmentName() {return assignmentName;}
     public String getFileName() {return fileName;}
+    public String getType() {return type;}
     // Setters
     public void setStudentName(String studentName) {
         this.studentName = studentName;
@@ -35,6 +37,7 @@ public class Assignment {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
+    public void setType(String type) {this.type = type;}
     // Constructor
     Assignment() {
         // set date
