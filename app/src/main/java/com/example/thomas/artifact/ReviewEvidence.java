@@ -36,9 +36,12 @@ public class ReviewEvidence extends AppCompatActivity {
     public String studentKey;
     private String assignmentName;
     private String fileName;
+    private String type;
     public StudentEntity selectedStudent;
     private Spinner mSpinner;
+    private Spinner typeSpinner;
     private ArrayAdapter<String> spinAdapter;
+    private ArrayAdapter<String> typeAdapter;
     private List<Assignment> assignmentList = new ArrayList<>();
 
     @Override
@@ -51,16 +54,26 @@ public class ReviewEvidence extends AppCompatActivity {
         selectedStudent = null;
         assignmentName = null;
         fileName = null;
+        type = "photo";
         mDatabase = FirebaseDatabase.getInstance().getReference();
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
         mAssignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
         nameDB = FirebaseDatabase.getInstance().getReference().child("Name");
-        // populate spinner
+        // populate student spinner
         mSpinner = findViewById(R.id.ddlStudent);
         mStudents.add(""); // add empty to top
         spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mStudents);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(spinAdapter);
+        // populate type spinner
+        List<String> types = new ArrayList<>();
+        types.add("photo");
+        types.add("video");
+        typeSpinner = findViewById(R.id.ddlType);
+        typeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(typeAdapter);
+        typeAdapter.notifyDataSetChanged();
 
         studentDB.addChildEventListener(new ChildEventListener() {
             @Override
@@ -88,7 +101,29 @@ public class ReviewEvidence extends AppCompatActivity {
             }
         });
 
-        // Spinner item select listener
+        // type spinner item select listener
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            protected Adapter initializedAdapter=null;
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                if(initializedAdapter !=parentView.getAdapter() ) {
+                    initializedAdapter = parentView.getAdapter();
+                    return;
+                }
+                String item = parentView.getItemAtPosition(position).toString();
+                type = item.toString();
+                emptyAssignments();
+                loadView();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
+
+        // student spinner item select listener
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             protected Adapter initializedAdapter=null;
@@ -103,7 +138,6 @@ public class ReviewEvidence extends AppCompatActivity {
                 studentName = item.toString();
                 emptyAssignments();
                 loadView();
-
             }
 
             @Override
@@ -111,6 +145,7 @@ public class ReviewEvidence extends AppCompatActivity {
                 // your code here
             }
         });
+
 
     }
 
@@ -132,10 +167,14 @@ public class ReviewEvidence extends AppCompatActivity {
                 // get nodes
                 for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
                     Assignment a = adSnapshot.getValue(Assignment.class);
-                    Log.d("NodeTest", "Ass name:" + a.getAssignmentName());
+                    Log.d("ReviewEvidence", "Ass name:" + a.getAssignmentName());
                     // check if it's student's assignment
                     String sName = a.getStudentName();
-                    if (sName.equals(studentName)){
+                    String t = a.getType();
+                    if (t == null) {t = "PHOTO";}
+                    t = t.toLowerCase();
+                    Log.d("ReviewEvidence", "Ass type:" + t + ", selected type:" + type);
+                    if (sName.equals(studentName) && t.equals(type)){
                         assignmentList.add(adSnapshot.getValue(Assignment.class));
                         mAssignments.add(a.getAssignmentName());
                     }
@@ -162,6 +201,7 @@ public class ReviewEvidence extends AppCompatActivity {
             }
         });
     }
+
     private void assignFileName(){
         // iterate through assignment list
         for(int i = 0; i < assignmentList.size(); i++) {
@@ -177,7 +217,12 @@ public class ReviewEvidence extends AppCompatActivity {
     }
     public void openViewAssignment(View view) {
         // pass data
-        Intent intent = new Intent(ReviewEvidence.this, ViewAssignment.class);
+        Intent intent;
+        if(type=="photo"){
+            intent = new Intent(ReviewEvidence.this, ViewAssignment.class);
+        } else {
+            intent = new Intent(ReviewEvidence.this, ViewVideo.class);
+        }
         intent.putExtra("name", studentName);
         //intent.putExtra("key", studentKey);
         intent.putExtra("assignment", assignmentName);
