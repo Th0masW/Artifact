@@ -16,4 +16,8 @@
     <string name="add_students_btn">Submit Student Name</string>
     <string name="ddl_student">None</string>
     <string name="edit_student_btn">Edit Student</string>
+    <string name="editStudents">EDIT STUDENT NAME</string>
+    <string name="select_student">Select Student:</string>
+    <string name="new_name">Enter new name:</string>
+    <string name="edited_name">Edited Name</string>
 </resources>

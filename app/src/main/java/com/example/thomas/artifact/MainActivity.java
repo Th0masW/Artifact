@@ -78,8 +78,10 @@ public class MainActivity extends AppCompatActivity {
         Log.e(tag, msg);
         Log.v(tag, "This is a verbose log");
         Log.wtf(tag, "WTF!");
+    }
 
-
+    public void openPickStudents(View view) {
+        startActivity(new Intent(MainActivity.this, PickStudent.class));
     }
 
 }

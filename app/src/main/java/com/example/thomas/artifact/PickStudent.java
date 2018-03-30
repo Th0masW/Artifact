@@ -1,5 +1,7 @@
 package com.example.thomas.artifact;
 
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GetPicture extends AppCompatActivity {
+public class PickStudent extends AppCompatActivity {
 
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
@@ -45,12 +47,10 @@ public class GetPicture extends AppCompatActivity {
     public String assignmentName;
     public StudentEntity selectedStudent;
 
-    private static final String TAG = "GetPicture";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_picture);
+        setContentView(R.layout.activity_pick_student);
 
         studentName = null;
         studentKey = null;
@@ -63,7 +63,7 @@ public class GetPicture extends AppCompatActivity {
         assignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
 
         // Populate listView
-        mListView = findViewById(R.id.myListView);
+        mListView = findViewById(R.id.pick_student_list);
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, mStudents);
         mListView.setAdapter(arrayAdapter);
@@ -105,7 +105,8 @@ public class GetPicture extends AppCompatActivity {
                 // get student key
                 StudentEntity myStudent = studentArray.get(position);
                 studentKey = myStudent.getKey();
-
+                Toast.makeText(getApplicationContext(),
+                        "You selected : " + studentName, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -134,15 +135,12 @@ public class GetPicture extends AppCompatActivity {
      * Opens Snap Picture Student page
      * @param view
      */
-    public void openSnapPicture(View view) {
+    public void openEditStudent(View view) {
         // pass data
-        Intent intent = new Intent(GetPicture.this, SnapPicture.class);
+        Intent intent = new Intent(PickStudent.this, EditStudentName.class);
         intent.putExtra("name", studentName);
         intent.putExtra("key", studentKey);
         Log.v("Student name: ", studentName);
         startActivity(intent);
     }
-
-
 }
-

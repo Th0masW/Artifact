@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ddlStudent" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/Select_student_text_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -43,7 +43,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/Select_student_text_box" />
 
     <ListView
         android:id="@+id/tabListView"
