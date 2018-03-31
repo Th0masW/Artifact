@@ -82,7 +82,7 @@ public class RecordVideo extends AppCompatActivity {
             studentName = intent.getStringExtra("name");
             studentKey = intent.getStringExtra("key");
             studentNode = FirebaseDatabase.getInstance().getReference().child("Assignment/" + studentName);
-            Log.v(TAG, "Name:" + studentName + ", key:" + studentKey);
+            //Log.v(TAG, "Name:" + studentName + ", key:" + studentKey);
             // change title to name
             setTitle("Student: " + studentName);
         }
@@ -137,6 +137,7 @@ public class RecordVideo extends AppCompatActivity {
         NameGenerator ng = new NameGenerator(studentName,"mp4");
         fileLocation = ng.getFileName();
         Log.v(TAG, "File name generated:" + fileLocation);
+        Log.v(TAG, "New file location:"+ fileLocation);
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         startActivityForResult(intent, VIDEO_CAPTURE);
 
@@ -150,8 +151,6 @@ public class RecordVideo extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Toast.makeText(this, "Video saved to:\n" +
                         data.getData(), Toast.LENGTH_LONG).show();
-                fileLocation = data.getData().toString();
-                Log.v(TAG, "New file location:"+ fileLocation);
                 // populate viewer
                 fileUri = data.getData();
                 myVideoView.setVideoURI(fileUri);
@@ -192,6 +191,7 @@ public class RecordVideo extends AppCompatActivity {
             // upload
             Assignment newAssign = new Videos(studentName, assName);
             newAssign.setFileName(fileUri.getLastPathSegment());
+            //newAssign.setFileName(fileLocation);
             // save to firebase
             HashMap<String, Assignment> datamap = new HashMap<String,Assignment>();
             datamap.put("Assignment",newAssign);
@@ -219,10 +219,12 @@ public class RecordVideo extends AppCompatActivity {
 
     private void uploadToStorage() {
         String storagePath = storageRef.getPath();
-        File myVideo = new File(fileUri.getPath());
+        //File myVideo = new File(fileUri.getPath());
         Log.d("SnapPicture", "Storage path:"+storagePath);
         //StorageReference videoRef = storageRef.child("videos/" + fileLocation);
-        StorageReference videoRef = storageRef.child("videos/" + fileUri.getLastPathSegment());
+        //StorageReference videoRef = storageRef.child("videos/" + fileUri.getLastPathSegment());
+        StorageReference videoRef = storageRef.child("videos/" + fileUri.getLastPathSegment() + ".mp4");
+        //StorageReference videoRef = storageRef.child("videos/" + fileLocation);
         UploadTask uploadTask = videoRef.putFile(fileUri);
         //videoRef.put;
         //UploadTask uploadTask = videoRef.putFile(myVideo.toURI().toString());

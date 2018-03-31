@@ -25,6 +25,7 @@ public class NameGenerator {
         setStudentName(studentName);
         this.fileExtension = fileExtension;
         randomFileName(this.studentName, this.fileExtension);
+        Log.v(TAG, "File name: " + fileName);
     }
 
     private void randomFileName(String name, String fileExtension) {

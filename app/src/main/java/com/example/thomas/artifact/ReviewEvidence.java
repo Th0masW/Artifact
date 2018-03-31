@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewEvidence extends AppCompatActivity {
+
+    private static final String TAG = "ReviewEvidence";
     private DatabaseReference studentDB;
     private DatabaseReference mAssignmentDB;
     private DatabaseReference mDatabase;
@@ -145,8 +147,6 @@ public class ReviewEvidence extends AppCompatActivity {
                 // your code here
             }
         });
-
-
     }
 
     public void emptyAssignments() {
@@ -218,16 +218,17 @@ public class ReviewEvidence extends AppCompatActivity {
     public void openViewAssignment(View view) {
         // pass data
         Intent intent;
-        if(type=="photo"){
+
+        if(type.equals("photo")){
+            Log.v(TAG, "Sending to photo activity");
             intent = new Intent(ReviewEvidence.this, ViewAssignment.class);
         } else {
-            intent = new Intent(ReviewEvidence.this, ViewVideo.class);
+            Log.v(TAG, "Sending to video activity");
+            intent = new Intent(ReviewEvidence.this, ReviewVideo.class);
         }
         intent.putExtra("name", studentName);
-        //intent.putExtra("key", studentKey);
         intent.putExtra("assignment", assignmentName);
         intent.putExtra("file", fileName);
-        //Log.v("Student name: ", studentName);
         startActivity(intent);
     }
 }

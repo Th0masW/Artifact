@@ -3,8 +3,11 @@
     package="com.example.thomas.artifact">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -33,11 +36,13 @@
             android:name=".Login"
             android:screenOrientation="portrait" />
         <activity android:name=".AddStudents" />
-        <activity android:name=".SnapPicture"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".SnapPicture"
+            android:screenOrientation="portrait" />
         <activity android:name=".NodeTest" />
         <activity android:name=".ViewAssignment" />
-        <activity android:name=".RecordVideo"></activity>
+        <activity android:name=".RecordVideo" />
+        <activity android:name=".ReviewVideo"></activity>
     </application>
 
 </manifest>
