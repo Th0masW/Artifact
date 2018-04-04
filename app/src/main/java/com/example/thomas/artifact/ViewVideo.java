@@ -50,14 +50,10 @@ public class ViewVideo extends AppCompatActivity {
 
             // change title to name
             setTitle(studentName + ": \"" + assignmentName);
-            // load image
-            //loadVideo();
-            //loadVideo2();
         }
     }
 
     private void loadVideo() {
-        //mAssignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         Log.v(TAG, "Storage Reference - find an o?-: " + storageRef.toString());
@@ -65,7 +61,6 @@ public class ViewVideo extends AppCompatActivity {
         StorageReference videoRef = storageRef.child(folderLocation);
         Log.v(TAG, "Storage location: " + storageRef.toString());
         Log.v(TAG, "Folder location: " + folderLocation);
-        //storageRef.child(fileName + ".mp4").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
         storageRef.child("videos/" + fileName + ".mp4").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -81,29 +76,9 @@ public class ViewVideo extends AppCompatActivity {
                 Log.v(TAG, "FAILED TO DOWNLOAD");
             }
         });
-
-        /*videoRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                //myVideoView.setImageBitmap(bitmap);
-                //myImageView.setImageBitmap(bytes.);
-                //myVideoView.set
-
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ViewVideo.this,"Error - Video could not be downloaded.", Toast.LENGTH_LONG).show();
-
-            }
-        }); */
-
     }
 
     private void loadVideo2() {
-        //mAssignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         Log.v(TAG, "Storage Reference - find an o?-: " + storageRef.toString());
@@ -111,7 +86,6 @@ public class ViewVideo extends AppCompatActivity {
         StorageReference videoRef = storageRef.child(folderLocation);
         Log.v(TAG, "Storage location: " + storageRef.toString());
         Log.v(TAG, "Folder location: " + folderLocation);
-        //storageRef.child(fileName + ".mp4").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
         storageRef.child("videos/" + fileName + ".mp4").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -119,7 +93,6 @@ public class ViewVideo extends AppCompatActivity {
                 try {
                     Log.v(TAG, "URL: " + uri.getPath());
                     myVideoView.setVideoURI(uri);
-                    //myVideoView.setVideoPath(uri.getPath());
                     myVideoView.requestFocus();
                     myVideoView.start();
                 } catch (Exception e){

@@ -27,12 +27,8 @@ public class ReviewEvidence extends AppCompatActivity {
     private static final String TAG = "ReviewEvidence";
     private DatabaseReference studentDB;
     private DatabaseReference mAssignmentDB;
-    private DatabaseReference mDatabase;
-    private DatabaseReference nameDB;
     private ArrayList<String> mStudents = new ArrayList<>();
     private ArrayList<String> mAssignments = new ArrayList<>();
-    private ArrayList<StudentEntity> studentArray = new ArrayList<>();
-    private ListView mListView;
     private ListView tabListView;
     public String studentName;
     public String studentKey;
@@ -57,10 +53,11 @@ public class ReviewEvidence extends AppCompatActivity {
         assignmentName = null;
         fileName = null;
         type = "photo";
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        //change title
+        setTitle("Review Evidence");
+        // get database reference
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
         mAssignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
-        nameDB = FirebaseDatabase.getInstance().getReference().child("Name");
         // populate student spinner
         mSpinner = findViewById(R.id.ddlStudent);
         mStudents.add(""); // add empty to top
@@ -81,7 +78,6 @@ public class ReviewEvidence extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 String name = dataSnapshot.getValue(String.class);
-                String key = dataSnapshot.getKey();
                 mStudents.add(name);
                 spinAdapter.notifyDataSetChanged();
             }
@@ -121,7 +117,7 @@ public class ReviewEvidence extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+
             }
         });
 
@@ -144,7 +140,7 @@ public class ReviewEvidence extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+
             }
         });
     }

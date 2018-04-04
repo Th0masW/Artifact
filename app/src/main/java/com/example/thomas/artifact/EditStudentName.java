@@ -66,33 +66,15 @@ public class EditStudentName extends AppCompatActivity {
         editStudentName = findViewById(R.id.edit_student_name_text_box);
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
         keyDB = FirebaseDatabase.getInstance().getReference().child("studentKey");
-
+        setTitle("Edit Student");
     }
 
     public void editStudentName(View view) {
         String name = editStudentName.getText().toString();
         Log.v("AddStudents", "Student name: " + name);
 
-         //studentDB.setValue(name);
          studentDB.child(studentKey).setValue(name);
-        
 
-        //HashMap<String, String> datamap = new HashMap<String,String>();
-        //  datamap.put(studentKey, name);
-
-       /* studentDB.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(EditStudentName.this,"Stored...", Toast.LENGTH_LONG).show();
-                    sendToMain();
-                } else {
-                    Toast.makeText(EditStudentName.this,"Error...", Toast.LENGTH_LONG).show();
-                }
-            }
-        }); */
-        // add name to Name in DB
-        //nameDB.push().setValue(name);
     }
 
     private void sendToMain() {

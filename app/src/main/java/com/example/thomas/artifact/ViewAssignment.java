@@ -47,7 +47,6 @@ public class ViewAssignment extends AppCompatActivity {
         }
     }
     private void loadImage() {
-        //mAssignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         StorageReference imagesRef = storageRef.child("images/" + fileName);
@@ -58,7 +57,6 @@ public class ViewAssignment extends AppCompatActivity {
             public void onSuccess(byte[] bytes) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 myImageView.setImageBitmap(bitmap);
-                //myImageView.setImageBitmap(bytes.);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

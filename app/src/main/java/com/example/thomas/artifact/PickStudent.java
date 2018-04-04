@@ -61,7 +61,7 @@ public class PickStudent extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
         assignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
-
+        setTitle("Edit Student");
         // Populate listView
         mListView = findViewById(R.id.pick_student_list);
 
@@ -77,10 +77,8 @@ public class PickStudent extends AppCompatActivity {
                 mStudents.add(name);
                 arrayAdapter.notifyDataSetChanged();
                 // add student entity
-                //Log.v("GetPicture", "Student:" + name + ", Key:" + key);
                 StudentEntity student = new StudentEntity(key,name);
                 studentArray.add(student);
-                //Log.v("GetPicture", "Testing entity. N:" + student.getName() + ", k:" + student.getKey());
             }
 
             @Override

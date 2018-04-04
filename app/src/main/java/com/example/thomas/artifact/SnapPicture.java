@@ -259,16 +259,10 @@ public class SnapPicture extends AppCompatActivity {
         if (!assName.isEmpty()) {
             // upload
             Assignment newAssign = new Pictures(studentName, assName, photo);
-            //String testMsg = "Student:" + newAssign.getStudentName() + ", Assignment:" + newAssign.getAssignmentName() + ", Date:" + newAssign.getDate();
             newAssign.setFileName(fileLocation);
             // save to firebase
             HashMap<String, Assignment> datamap = new HashMap<String,Assignment>();
             datamap.put(assName, newAssign);
-            //studentNode.setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
-
-            //studentNode.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            //                @Override
-            //                public void onComplete(@NonNull Task<Void> task) {
             studentNode.child(assName).setValue(fileLocation).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -292,12 +286,10 @@ public class SnapPicture extends AppCompatActivity {
         if (!assName.isEmpty()) {
             // upload
             Assignment newAssign = new Pictures(studentName, assName, photo);
-            //String testMsg = "Student:" + newAssign.getStudentName() + ", Assignment:" + newAssign.getAssignmentName() + ", Date:" + newAssign.getDate();
             newAssign.setFileName(fileLocation);
             // save to firebase
             HashMap<String, Assignment> datamap = new HashMap<String,Assignment>();
             datamap.put(assName, newAssign);
-            //studentNode.setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
             studentNode.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

@@ -64,6 +64,8 @@ public class GetPicture extends AppCompatActivity {
 
         // Populate listView
         mListView = findViewById(R.id.myListView);
+        // change name
+        setTitle("Take a Picture");
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, mStudents);
         mListView.setAdapter(arrayAdapter);
@@ -77,10 +79,8 @@ public class GetPicture extends AppCompatActivity {
                 mStudents.add(name);
                 arrayAdapter.notifyDataSetChanged();
                 // add student entity
-                //Log.v("GetPicture", "Student:" + name + ", Key:" + key);
                 StudentEntity student = new StudentEntity(key,name);
                 studentArray.add(student);
-                //Log.v("GetPicture", "Testing entity. N:" + student.getName() + ", k:" + student.getKey());
             }
 
             @Override

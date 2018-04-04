@@ -23,5 +23,7 @@ public class Pictures extends Assignment {
         setPhoto(picture);
         setType(ASSIGNMENT_TYPE);
     }
-    Pictures() {}
+    Pictures() {
+        setType(ASSIGNMENT_TYPE);
+    }
 }

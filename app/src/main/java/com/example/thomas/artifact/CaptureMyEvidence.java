@@ -11,6 +11,7 @@ public class CaptureMyEvidence extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capture_my_evidence);
+        setTitle("Capture Evidence");
     }
 
     public void openVideo(View view) {

@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="200px"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@android:color/holo_green_dark"
+        android:backgroundTint="@android:color/holo_blue_dark"
         android:onClick="openVideo"
         android:text="@string/get_video"
         android:textColor="@android:color/background_light"
@@ -22,26 +22,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button4"
-        android:layout_width="0dp"
-        android:layout_height="200px"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@android:color/holo_green_dark"
-        android:onClick="openAudio"
-        android:text="@string/get_audio"
-        android:textColor="@android:color/background_light"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
-
-    <Button
         android:id="@+id/button5"
         android:layout_width="0dp"
         android:layout_height="200px"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@android:color/holo_green_dark"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@android:color/holo_blue_dark"
         android:onClick="openPicture"
         android:text="@string/get_picture"
         android:textColor="@android:color/background_light"
@@ -49,5 +34,5 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
 </android.support.constraint.ConstraintLayout>

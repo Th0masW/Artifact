@@ -36,12 +36,10 @@ import java.util.HashMap;
 
 public class RecordVideo extends AppCompatActivity {
     private static final int VIDEO_CAPTURE = 101;
-    static final int REQUEST_VIDEO_CAPTURE = 1;
     private static final String TAG = "RecordVideo";
     VideoView myVideoView;
     Button save_btn;
     Button cancel_btn;
-    Bitmap photo;
     String studentName;
     String studentKey;
     String fileLocation;
@@ -50,11 +48,8 @@ public class RecordVideo extends AppCompatActivity {
     MediaController mediaC;
     private Uri fileUri;
     private DatabaseReference assignmentDB;
-    private DatabaseReference studentNode;
-    private StorageReference mStorageRef;
     private FirebaseStorage storage;
     private StorageReference storageRef;
-    private MediaStore.Video video;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +61,9 @@ public class RecordVideo extends AppCompatActivity {
         save_btn = findViewById(R.id.saveBtn);
         cancel_btn = findViewById(R.id.cancelBtn);
         assignmentName = findViewById(R.id.assignName);
-        studentNode = null;
         fileUri = null;
-        video = null;
         mediaC = new MediaController(this);
         assignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
-        mStorageRef = FirebaseStorage.getInstance().getReference();
         lblAssign = findViewById(R.id.labelAssign);
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
@@ -81,10 +73,8 @@ public class RecordVideo extends AppCompatActivity {
             // assign student name and key
             studentName = intent.getStringExtra("name");
             studentKey = intent.getStringExtra("key");
-            studentNode = FirebaseDatabase.getInstance().getReference().child("Assignment/" + studentName);
-            //Log.v(TAG, "Name:" + studentName + ", key:" + studentKey);
             // change title to name
-            setTitle("Student: " + studentName);
+            setTitle("Record video of " + studentName);
         }
 
         // check for camera
@@ -191,7 +181,6 @@ public class RecordVideo extends AppCompatActivity {
             // upload
             Assignment newAssign = new Videos(studentName, assName);
             newAssign.setFileName(fileUri.getLastPathSegment());
-            //newAssign.setFileName(fileLocation);
             // save to firebase
             HashMap<String, Assignment> datamap = new HashMap<String,Assignment>();
             datamap.put("Assignment",newAssign);
@@ -219,15 +208,9 @@ public class RecordVideo extends AppCompatActivity {
 
     private void uploadToStorage() {
         String storagePath = storageRef.getPath();
-        //File myVideo = new File(fileUri.getPath());
         Log.d("SnapPicture", "Storage path:"+storagePath);
-        //StorageReference videoRef = storageRef.child("videos/" + fileLocation);
-        //StorageReference videoRef = storageRef.child("videos/" + fileUri.getLastPathSegment());
         StorageReference videoRef = storageRef.child("videos/" + fileUri.getLastPathSegment() + ".mp4");
-        //StorageReference videoRef = storageRef.child("videos/" + fileLocation);
         UploadTask uploadTask = videoRef.putFile(fileUri);
-        //videoRef.put;
-        //UploadTask uploadTask = videoRef.putFile(myVideo.toURI().toString());
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {

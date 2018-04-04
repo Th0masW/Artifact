@@ -20,15 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class GetVideo extends AppCompatActivity {
-    private FirebaseDatabase mFirebaseDatabase;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
     private DatabaseReference studentDB;
     private ArrayList<String> mStudents = new ArrayList<>();
     private ArrayList<StudentEntity> studentArray = new ArrayList<>();
-    private ArrayList<Assignment> assignmentArray = new ArrayList<>();
-    private DatabaseReference assignmentDB;
-    private ArrayList<String> mAssignments = new ArrayList<>();
     private ListView mListView;
     public String studentName;
     public String studentKey;
@@ -47,11 +41,9 @@ public class GetVideo extends AppCompatActivity {
         assignmentName = null;
         fileName = null;
         selectedStudent = null;
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
-        assignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
-
+        // change title
+        setTitle("Record Video");
         // Populate listView
         mListView = findViewById(R.id.myListView);
 
@@ -67,10 +59,8 @@ public class GetVideo extends AppCompatActivity {
                 mStudents.add(name);
                 arrayAdapter.notifyDataSetChanged();
                 // add student entity
-                //Log.v("GetPicture", "Student:" + name + ", Key:" + key);
                 StudentEntity student = new StudentEntity(key,name);
                 studentArray.add(student);
-                //Log.v("GetPicture", "Testing entity. N:" + student.getName() + ", k:" + student.getKey());
             }
 
             @Override
@@ -106,7 +96,6 @@ public class GetVideo extends AppCompatActivity {
                                        int position, long id) {
                 // On selecting a spinner item
                 studentName = adapter.getItemAtPosition(position).toString();
-
                 // Showing selected spinner item
                 Toast.makeText(getApplicationContext(),
                         "You selected : " + studentName, Toast.LENGTH_SHORT).show();
@@ -129,7 +118,6 @@ public class GetVideo extends AppCompatActivity {
             Intent intent = new Intent(GetVideo.this, RecordVideo.class);
             intent.putExtra("name", studentName);
             intent.putExtra("key", studentKey);
-
             startActivity(intent);
         }
     }

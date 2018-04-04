@@ -32,7 +32,6 @@ public class AddStudents extends AppCompatActivity {
     private Boolean allSaved;
 
 // ...
-    //mDatabase = FirebaseDatabase.getInstance().getReference();
 
     @IgnoreExtraProperties
     public class Student {
@@ -59,6 +58,7 @@ public class AddStudents extends AppCompatActivity {
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
         nameDB = FirebaseDatabase.getInstance().getReference().child("Name");
         allSaved = null;
+        setTitle("Add Student");
     }
     public void addStudent(View view) {
         String name = addStudentName.getText().toString();
@@ -71,35 +71,20 @@ public class AddStudents extends AppCompatActivity {
         datamap.put("Name", name);
         datamap.put("Grade", grade);
         // add to "student" node
-        /*studentDB.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    //Toast.makeText(AddStudents.this,"Stored...", Toast.LENGTH_LONG).show();
-                } else {
-                    allSaved = false;
-                    //Toast.makeText(AddStudents.this,"Error...", Toast.LENGTH_LONG).show();
-                }
-            }
-        });*/
         studentDB.push().setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    //Toast.makeText(AddStudents.this,"Stored...", Toast.LENGTH_LONG).show();
                 } else {
                     allSaved = false;
-                    //Toast.makeText(AddStudents.this,"Error...", Toast.LENGTH_LONG).show();
                 }
             }
         });
         // add name to Name in DB
-        //nameDB.push().setValue(name);
         nameDB.push().setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    //Toast.makeText(AddStudents.this,"Stored...", Toast.LENGTH_LONG).show();
                 } else {
                     allSaved = false;
                 }
@@ -134,13 +119,7 @@ public class AddStudents extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        //Check if user is logged in, if so, send to main
-       // if(currentUser != null) {
-      //      sendToMain();
-      //  }
     }
 
     private void sendToMain() {

@@ -3,7 +3,7 @@
     <string name="app_capture">Capture Evidence</string>
     <string name="app_review">Review Evidence</string>
     <string name="title_activity_capture_evidence">Capture Evidence</string>
-    <string name="get_video">Grab Video</string>
+    <string name="get_video">Record Video</string>
     <string name="get_audio">Record Audio</string>
     <string name="get_picture">Snap Picture</string>
     <string name="Artifact_logo_text" translatable="false">Artifact App</string>
