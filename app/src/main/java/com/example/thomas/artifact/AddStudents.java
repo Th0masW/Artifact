@@ -102,7 +102,7 @@ public class AddStudents extends AppCompatActivity {
         });
         // communicate if saved
         if (allSaved== null) {
-            Toast.makeText(AddStudents.this,"Student has been added", Toast.LENGTH_LONG).show();
+            Toast.makeText(AddStudents.this,name + " has been added", Toast.LENGTH_LONG).show();
             sendToMain();
         } else {
             Toast.makeText(AddStudents.this,"Error: student could not be added. " +
@@ -111,10 +111,6 @@ public class AddStudents extends AppCompatActivity {
 
     }
 
-    private void writeNewUser(String userId, String name) {
-        Student student = new Student(name);
-        mDatabase.child("student").child(userId).setValue(student);
-    }
 
     @Override
     protected void onStart() {
