@@ -25,7 +25,7 @@ public class AddStudents extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText addStudentName;
     private EditText studentGrade;
-    private Button add_students_btn;
+    private Button add_students_btn;  //********remove>>>>
     private DatabaseReference mDatabase;
     private DatabaseReference studentDB;
     private DatabaseReference nameDB;
