@@ -80,26 +80,7 @@ public class AddStudents extends AppCompatActivity {
                 }
             }
         });
-        // add name to Name in DB
-        nameDB.push().setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                } else {
-                    allSaved = false;
-                }
-            }
-        });
-        //add name as a node to use for assignments
-        mDatabase.push().setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                } else {
-                    allSaved = false;
-                }
-            }
-        });
+
         // communicate if saved
         if (allSaved== null) {
             Toast.makeText(AddStudents.this,name + " has been added", Toast.LENGTH_LONG).show();
@@ -110,8 +91,7 @@ public class AddStudents extends AppCompatActivity {
         }
 
     }
-
-
+    
     @Override
     protected void onStart() {
         super.onStart();
