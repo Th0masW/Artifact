@@ -105,11 +105,8 @@ public class GetPicture extends AppCompatActivity {
                 // get student key
                 StudentEntity myStudent = studentArray.get(position);
                 studentKey = myStudent.getKey();
-
-
             }
         });
-
 
         mListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -127,7 +124,6 @@ public class GetPicture extends AppCompatActivity {
                 // TODO Auto-generated method stub
             }
         });
-
     }
 
     /**
@@ -143,6 +139,14 @@ public class GetPicture extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void openSnapPicture() {
+        // pass data
+        Intent intent = new Intent(GetPicture.this, SnapPicture.class);
+        intent.putExtra("name", studentName);
+        intent.putExtra("key", studentKey);
+        Log.v("Student name: ", studentName);
+        startActivity(intent);
+    }
 
 }
 

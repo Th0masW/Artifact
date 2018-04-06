@@ -89,6 +89,8 @@ public class SnapPicture extends AppCompatActivity {
         buttonVisibility(false);
         // make assignment invisible
         assignmentVisibility(false);
+        // open camera
+        launchCamera();
     }
 
     // check for camera
@@ -100,6 +102,12 @@ public class SnapPicture extends AppCompatActivity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
+
+    private void launchCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+    }
+
     // return the image taken
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

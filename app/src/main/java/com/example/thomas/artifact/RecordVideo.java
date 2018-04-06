@@ -85,6 +85,8 @@ public class RecordVideo extends AppCompatActivity {
         buttonVisibility(false);
         // make assignment invisible
         assignmentVisibility(false);
+        // launch camera off the bat
+        launchCamera();
     }
 
     // check for camera
@@ -136,6 +138,19 @@ public class RecordVideo extends AppCompatActivity {
         mediaC.setAnchorView(myVideoView);
     }
 
+    private void launchCamera() {
+        // create random file name
+        NameGenerator ng = new NameGenerator(studentName,"mp4");
+        fileLocation = ng.getFileName();
+        Log.v(TAG, "File name generated:" + fileLocation);
+        Log.v(TAG, "New file location:"+ fileLocation);
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        startActivityForResult(intent, VIDEO_CAPTURE);
+
+        // set media controller
+        myVideoView.setMediaController(mediaC);
+        mediaC.setAnchorView(myVideoView);
+    }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == VIDEO_CAPTURE) {
             if (resultCode == RESULT_OK) {
