@@ -57,7 +57,7 @@ public class EditStudentName extends AppCompatActivity {
             studentName = intent.getStringExtra("name");
             studentKey = intent.getStringExtra("key");
             // change title to name
-            setTitle("Student: " + studentKey);
+            setTitle("Student: " + studentName);
         }
 
         mAuth = FirebaseAuth.getInstance();
@@ -66,7 +66,7 @@ public class EditStudentName extends AppCompatActivity {
         editStudentName = findViewById(R.id.edit_student_name_text_box);
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
         keyDB = FirebaseDatabase.getInstance().getReference().child("studentKey");
-        setTitle("Edit Student");
+
     }
 
     public void editStudentName(View view) {
