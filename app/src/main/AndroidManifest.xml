@@ -40,7 +40,6 @@
         <activity
             android:name=".SnapPicture"
             android:screenOrientation="portrait" />
-        <activity android:name=".NodeTest" />
         <activity android:name=".ViewAssignment" />
         <activity android:name=".RecordVideo" />
         <activity android:name=".ReviewVideo"></activity>
