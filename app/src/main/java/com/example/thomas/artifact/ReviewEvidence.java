@@ -155,7 +155,7 @@ public class ReviewEvidence extends AppCompatActivity {
         // Populate listView
         tabListView = findViewById(R.id.tabListView);
 
-        final ArrayAdapter<String> assignmentAdapter = new ArrayAdapter<String>
+        final ArrayAdapter<String> assignmentAdapter = new ArrayAdapter<>
                 (this, android.R.layout.simple_expandable_list_item_1,
                         mAssignments);
         tabListView.setAdapter(assignmentAdapter);

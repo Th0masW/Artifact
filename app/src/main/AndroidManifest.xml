@@ -32,6 +32,7 @@
         <activity android:name=".GetPicture" />
         <activity android:name=".PickStudent" />
         <activity android:name=".EditStudentName" />
+        <activity android:name=".ViewVideo" />
         <activity
             android:name=".Login"
             android:screenOrientation="portrait" />

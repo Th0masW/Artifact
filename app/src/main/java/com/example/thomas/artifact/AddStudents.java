@@ -97,7 +97,7 @@ public class AddStudents extends AppCompatActivity {
         Log.e("AddStudents", "Student name: " + name);
         Log.e("AddStudents", "Student grade: " + grade);
 
-        HashMap<String, String> datamap = new HashMap<String,String>();
+        HashMap<String, String> datamap = new HashMap<>();
         datamap.put("Name", name);
         datamap.put("Grade", grade);
 

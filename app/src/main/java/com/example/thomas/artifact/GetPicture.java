@@ -69,7 +69,7 @@ public class GetPicture extends AppCompatActivity {
         // change name
         setTitle("Take a Picture");
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, mStudents);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, mStudents);
         mListView.setAdapter(arrayAdapter);
         // add to adapter
 
@@ -130,7 +130,7 @@ public class GetPicture extends AppCompatActivity {
 
     /**
      * Opens Snap Picture Student page
-     * @param view
+     * @param view Snap Picture
      */
     public void openSnapPicture(View view) {
         // pass data

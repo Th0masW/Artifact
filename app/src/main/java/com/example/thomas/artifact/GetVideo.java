@@ -46,7 +46,7 @@ public class GetVideo extends AppCompatActivity {
         // Populate listView
         mListView = findViewById(R.id.myListView);
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, mStudents);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, mStudents);
         mListView.setAdapter(arrayAdapter);
         // add to adapter
 
@@ -109,7 +109,7 @@ public class GetVideo extends AppCompatActivity {
 
     /**
      * Opens Snap Picture Student page
-     * @param view
+     * @param view Snap Picture
      */
     public void openRecordVideo(View view) {
         // pass data

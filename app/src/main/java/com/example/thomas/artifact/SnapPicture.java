@@ -245,7 +245,7 @@ public class SnapPicture extends AppCompatActivity {
             Assignment newAssign = new Pictures(studentName, assName, photo);
             newAssign.setFileName(fileLocation);
             // save to firebase
-            HashMap<String, Assignment> datamap = new HashMap<String,Assignment>();
+            HashMap<String, Assignment> datamap = new HashMap<>();
             datamap.put("Assignment",newAssign);
             assignmentDB.push().setValue(newAssign).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -272,7 +272,7 @@ public class SnapPicture extends AppCompatActivity {
             Assignment newAssign = new Pictures(studentName, assName, photo);
             newAssign.setFileName(fileLocation);
             // save to firebase
-            HashMap<String, Assignment> datamap = new HashMap<String,Assignment>();
+            HashMap<String, Assignment> datamap = new HashMap<>();
             datamap.put(assName, newAssign);
             studentNode.child(assName).setValue(fileLocation).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -299,7 +299,7 @@ public class SnapPicture extends AppCompatActivity {
             Assignment newAssign = new Pictures(studentName, assName, photo);
             newAssign.setFileName(fileLocation);
             // save to firebase
-            HashMap<String, Assignment> datamap = new HashMap<String,Assignment>();
+            HashMap<String, Assignment> datamap = new HashMap<>();
             datamap.put(assName, newAssign);
             studentNode.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -337,7 +337,7 @@ public class SnapPicture extends AppCompatActivity {
     }
 
     private void buttonVisibility(boolean x) {
-        if (x == true) {
+        if (x) {
             // make save and cancel visible
             save_btn.setVisibility(View.VISIBLE);
             cancel_btn.setVisibility(View.VISIBLE);
@@ -348,7 +348,7 @@ public class SnapPicture extends AppCompatActivity {
         }
     }
     private void assignmentVisibility(boolean x) {
-        if (x == true) {
+        if (x) {
             // make assignment options visible
             lblAssign.setVisibility(View.VISIBLE);
             assignmentName.setVisibility((View.VISIBLE));

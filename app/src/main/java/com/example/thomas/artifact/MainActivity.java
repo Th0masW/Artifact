@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Opens Review Evidence page
-     * @param view
+     * @param view Review Evidence
      */
     public void openReviewEvidence(View view) {
         startActivity(new Intent(MainActivity.this, ReviewEvidence.class));
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Opens Add Student page
-     * @param view
+     * @param view Add Student Page
      */
     public void openAddStudents(View view) {
         startActivity(new Intent(MainActivity.this, AddStudents.class));
