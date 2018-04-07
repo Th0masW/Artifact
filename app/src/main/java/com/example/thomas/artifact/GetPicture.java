@@ -54,6 +54,16 @@ public class GetPicture extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_picture);
 
+        //Make sure user is logged in
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        //Redirect to login page
+        if(currentUser == null) {
+            //create login intent
+            Intent loginIntent = new Intent(GetPicture.this, Login.class);
+            startActivity(loginIntent);
+            finish();
+        }
+
         studentName = null;
         studentKey = null;
         assignmentName = null;

@@ -21,8 +21,6 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
 
-import static com.example.thomas.artifact.R.menu.main_menu;
-
 public class AddStudents extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -47,6 +45,16 @@ public class AddStudents extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Make sure user is logged in
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        //Redirect to login page
+        if(currentUser == null) {
+            //create login intent
+            Intent loginIntent = new Intent(AddStudents.this, Login.class);
+            startActivity(loginIntent);
+            finish();
+        }
         setContentView(R.layout.activity_add_students);
         mAuth = FirebaseAuth.getInstance();
         addStudentName = findViewById(R.id.add_student_text_box);
@@ -54,6 +62,8 @@ public class AddStudents extends AppCompatActivity {
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
         allSaved = null;
         setTitle("Add Student");
+
+
 
     }
 

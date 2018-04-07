@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class CaptureMyEvidence extends AppCompatActivity {
 
@@ -16,6 +17,16 @@ public class CaptureMyEvidence extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capture_my_evidence);
         setTitle("Capture Evidence");
+
+        //Make sure user is logged in
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        //Redirect to login page
+        if(currentUser == null) {
+            //create login intent
+            Intent loginIntent = new Intent(CaptureMyEvidence.this, Login.class);
+            startActivity(loginIntent);
+            finish();
+        }
     }
 
     public void openVideo(View view) {

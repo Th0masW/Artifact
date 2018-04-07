@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import android.view.Menu;
@@ -29,6 +30,16 @@ public class EditStudentName extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_student_name);
+
+        //Make sure user is logged in
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        //Redirect to login page
+        if(currentUser == null) {
+            //create login intent
+            Intent loginIntent = new Intent(EditStudentName.this, Login.class);
+            startActivity(loginIntent);
+            finish();
+        }
 
         Intent intent = getIntent();
         if (null != intent) {
