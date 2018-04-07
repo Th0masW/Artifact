@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -228,13 +229,19 @@ public class SnapPicture extends AppCompatActivity {
         // create file name
         fileLocation = randomFileName(studentName);
 
+        //make sure name field is not blank
+        if(TextUtils.isEmpty(assName)) {
+            assignmentName.setError("The name field must have a value.");
+        }
+
+        else {
         // upload to student node
         uploadToNode3();
         //upload picture to db
         uploadToStorage();
         // disable assignment controls
         assignmentVisibility(false);
-        buttonVisibility(false);
+        buttonVisibility(false); }
     }
 
     private void uploadToNode3() {
@@ -264,61 +271,7 @@ public class SnapPicture extends AppCompatActivity {
         }
     }
 
-    private void uploadToNode2() {
-        String assName = assignmentName.getText().toString();
-        // check for name
-        if (!assName.isEmpty()) {
-            // upload
-            Assignment newAssign = new Pictures(studentName, assName, photo);
-            newAssign.setFileName(fileLocation);
-            // save to firebase
-            HashMap<String, Assignment> datamap = new HashMap<>();
-            datamap.put(assName, newAssign);
-            studentNode.child(assName).setValue(fileLocation).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(SnapPicture.this,"Assignment Saved", Toast.LENGTH_LONG).show();
-                        // reset image and assignment name
-                        resetAssignment();
-                    } else {
-                        Toast.makeText(SnapPicture.this,"Error...Assignment Not Saved", Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-        } else {
-            Toast.makeText(this, "Missing: Assignment Name", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void uploadToNode() {
-        String assName = assignmentName.getText().toString();
-        // check for name
-        if (!assName.isEmpty()) {
-            // upload
-            Assignment newAssign = new Pictures(studentName, assName, photo);
-            newAssign.setFileName(fileLocation);
-            // save to firebase
-            HashMap<String, Assignment> datamap = new HashMap<>();
-            datamap.put(assName, newAssign);
-            studentNode.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(SnapPicture.this,"Assignment Saved", Toast.LENGTH_LONG).show();
-                        // reset image and assignment name
-                        resetAssignment();
-                    } else {
-                        Toast.makeText(SnapPicture.this,"Error...Assignment Not Saved", Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-        } else {
-            Toast.makeText(this, "Missing: Assignment Name", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void resetAssignment() {
+       private void resetAssignment() {
         assignmentName.setText("");
         myImageView.setImageBitmap(null);
     }
