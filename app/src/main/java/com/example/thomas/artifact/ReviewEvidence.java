@@ -12,13 +12,15 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+import android.view.Menu;
+import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -227,4 +229,45 @@ public class ReviewEvidence extends AppCompatActivity {
         intent.putExtra("file", fileName);
         startActivity(intent);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.home) {
+            sendToMain();
+        } else if(item.getItemId() == R.id.capture_evidence) {
+            Intent go = new Intent(ReviewEvidence.this, CaptureMyEvidence.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.review_evidence) {
+            Intent go = new Intent(ReviewEvidence.this, ReviewEvidence.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.add_students) {
+            Intent go = new Intent(ReviewEvidence.this, AddStudents.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.edit_student) {
+            Intent go = new Intent(ReviewEvidence.this, PickStudent.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.log_out) {
+            FirebaseAuth.getInstance().signOut();
+            sendToMain();
+        }
+
+        return true;
+    }
+
+    private void sendToMain() {
+        Intent mainIntent = new Intent(ReviewEvidence.this, MainActivity.class);
+        startActivity(mainIntent);
+        finish();
+    }
+    
 }

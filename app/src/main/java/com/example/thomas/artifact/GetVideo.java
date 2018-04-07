@@ -1,5 +1,4 @@
 package com.example.thomas.artifact;
-
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,15 +8,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class GetVideo extends AppCompatActivity {
     private DatabaseReference studentDB;
@@ -122,5 +121,44 @@ public class GetVideo extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.home) {
+            sendToMain();
+        } else if(item.getItemId() == R.id.capture_evidence) {
+            Intent go = new Intent(GetVideo.this, CaptureMyEvidence.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.review_evidence) {
+            Intent go = new Intent(GetVideo.this, ReviewEvidence.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.add_students) {
+            Intent go = new Intent(GetVideo.this, GetVideo.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.edit_student) {
+            Intent go = new Intent(GetVideo.this, PickStudent.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.log_out) {
+            FirebaseAuth.getInstance().signOut();
+            sendToMain();
+        }
+
+        return true;
+    }
+
+    private void sendToMain() {
+        Intent mainIntent = new Intent(GetVideo.this, MainActivity.class);
+        startActivity(mainIntent);
+        finish();
+    }
 
 }

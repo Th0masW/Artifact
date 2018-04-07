@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.MediaController;
 import android.widget.VideoView;
-
+import android.view.Menu;
+import android.view.MenuItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -76,5 +78,45 @@ public class ReviewVideo extends AppCompatActivity {
                 Log.v(TAG, "FAILED TO DOWNLOAD");
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.home) {
+            sendToMain();
+        } else if(item.getItemId() == R.id.capture_evidence) {
+            Intent go = new Intent(ReviewVideo.this, CaptureMyEvidence.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.review_evidence) {
+            Intent go = new Intent(ReviewVideo.this, ReviewEvidence.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.add_students) {
+            Intent go = new Intent(ReviewVideo.this, AddStudents.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.edit_student) {
+            Intent go = new Intent(ReviewVideo.this, PickStudent.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.log_out) {
+            FirebaseAuth.getInstance().signOut();
+            sendToMain();
+        }
+
+        return true;
+    }
+
+    private void sendToMain() {
+        Intent mainIntent = new Intent(ReviewVideo.this, MainActivity.class);
+        startActivity(mainIntent);
+        finish();
     }
 }

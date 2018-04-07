@@ -26,6 +26,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class GetPicture extends AppCompatActivity {
 
@@ -146,6 +148,46 @@ public class GetPicture extends AppCompatActivity {
         intent.putExtra("key", studentKey);
         Log.v("Student name: ", studentName);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.home) {
+            sendToMain();
+        } else if(item.getItemId() == R.id.capture_evidence) {
+            Intent go = new Intent(GetPicture.this, CaptureMyEvidence.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.review_evidence) {
+            Intent go = new Intent(GetPicture.this, ReviewEvidence.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.add_students) {
+            Intent go = new Intent(GetPicture.this, GetPicture.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.edit_student) {
+            Intent go = new Intent(GetPicture.this, PickStudent.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.log_out) {
+            FirebaseAuth.getInstance().signOut();
+            sendToMain();
+        }
+
+        return true;
+    }
+
+    private void sendToMain() {
+        Intent mainIntent = new Intent(GetPicture.this, MainActivity.class);
+        startActivity(mainIntent);
+        finish();
     }
 
 }

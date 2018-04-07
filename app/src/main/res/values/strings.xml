@@ -20,4 +20,10 @@
     <string name="select_student">Select Student:</string>
     <string name="new_name">Enter new name:</string>
     <string name="edited_name">Edited Name</string>
+    <string name="capture_evidence">Capture Evidence</string>
+    <string name="review_evidence">Review Evidence</string>
+    <string name="add_students">Add Students</string>
+    <string name="edit_student">Edit Students</string>
+    <string name="log_out">Log Out</string>
+    <string name="home">Home</string>
 </resources>

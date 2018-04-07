@@ -1,13 +1,12 @@
 package com.example.thomas.artifact;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
+import android.view.Menu;
+import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 // thomas was here
@@ -42,10 +41,49 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Opens Evidence Capture page
-     * @param view
-     */
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.home) {
+            sendToMain();
+        } else if(item.getItemId() == R.id.capture_evidence) {
+            Intent go = new Intent(MainActivity.this, CaptureMyEvidence.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.review_evidence) {
+            Intent go = new Intent(MainActivity.this, ReviewEvidence.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.add_students) {
+            Intent go = new Intent(MainActivity.this, AddStudents.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.edit_student) {
+            Intent go = new Intent(MainActivity.this, PickStudent.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.log_out) {
+            FirebaseAuth.getInstance().signOut();
+            sendToMain();
+        }
+
+        return true;
+    }
+
+    private void sendToMain() {
+        Intent mainIntent = new Intent(MainActivity.this, MainActivity.class);
+        startActivity(mainIntent);
+        finish();
+    }
+
+
     public void openEvidenceCapture(View view) {
         startActivity(new Intent(MainActivity.this, CaptureMyEvidence.class));
     }

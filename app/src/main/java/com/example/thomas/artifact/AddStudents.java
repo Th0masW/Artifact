@@ -1,15 +1,16 @@
 package com.example.thomas.artifact;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
+
+import static com.example.thomas.artifact.R.menu.main_menu;
 
 public class AddStudents extends AppCompatActivity {
 
@@ -51,6 +54,41 @@ public class AddStudents extends AppCompatActivity {
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
         allSaved = null;
         setTitle("Add Student");
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.home) {
+            sendToMain();
+        } else if(item.getItemId() == R.id.capture_evidence) {
+            Intent go = new Intent(AddStudents.this, CaptureMyEvidence.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.review_evidence) {
+            Intent go = new Intent(AddStudents.this, ReviewEvidence.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.add_students) {
+            Intent go = new Intent(AddStudents.this, AddStudents.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.edit_student) {
+            Intent go = new Intent(AddStudents.this, PickStudent.class);
+            startActivity(go);
+            finish();
+        }else if(item.getItemId() == R.id.log_out) {
+            FirebaseAuth.getInstance().signOut();
+            sendToMain();
+        }
+
+        return true;
     }
     public void addStudent(View view) {
         String name = addStudentName.getText().toString();
@@ -100,10 +138,18 @@ public class AddStudents extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser == null) {
+            //create login intent
+            Intent loginIntent = new Intent(AddStudents.this, Login.class);
+            startActivity(loginIntent);
+            finish();
+        }
     }
 
     private void sendToMain() {
         Intent mainIntent = new Intent(AddStudents.this, MainActivity.class);
+        startActivity(mainIntent);
         finish();
     }
 
