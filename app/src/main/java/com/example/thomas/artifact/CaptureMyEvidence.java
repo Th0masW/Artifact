@@ -34,7 +34,7 @@ public class CaptureMyEvidence extends AppCompatActivity {
     }
 
     public void openAudio(View view) {
-        startActivity(new Intent(CaptureMyEvidence.this, GetAudio.class));
+        startActivity(new Intent(CaptureMyEvidence.this, AudioSelectStudent.class));
     }
 
     public void openPicture(View view) {

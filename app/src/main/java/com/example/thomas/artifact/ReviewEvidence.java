@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class ReviewEvidence extends AppCompatActivity {
 
@@ -44,6 +46,11 @@ public class ReviewEvidence extends AppCompatActivity {
     private ArrayAdapter<String> spinAdapter;
     private ArrayAdapter<String> typeAdapter;
     private List<Assignment> assignmentList = new ArrayList<>();
+    TextView lblType;
+    TextView lblAssignment;
+    Spinner ddlType;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +72,12 @@ public class ReviewEvidence extends AppCompatActivity {
         assignmentName = null;
         fileName = null;
         type = "photo";
+        lblType = findViewById(R.id.lblType);
+        ddlType = findViewById(R.id.ddlType);
+        lblAssignment = findViewById(R.id.lblAssignment);
         //change title
         setTitle("Review Evidence");
+
         // get database reference
         studentDB = FirebaseDatabase.getInstance().getReference().child("Student");
         mAssignmentDB = FirebaseDatabase.getInstance().getReference().child("Assignment");
@@ -148,6 +159,7 @@ public class ReviewEvidence extends AppCompatActivity {
                 studentName = item.toString();
                 emptyAssignments();
                 loadView();
+
             }
 
             @Override
@@ -155,6 +167,22 @@ public class ReviewEvidence extends AppCompatActivity {
 
             }
         });
+    }
+    private void adjustVisibility() {
+        if (studentName != null) {
+            lblAssignment.setVisibility(View.VISIBLE);
+            lblType.setVisibility(View.VISIBLE);
+            ddlType.setVisibility(View.VISIBLE);
+            //tabListView.setVisibility(View.VISIBLE);
+        } else {
+
+            lblAssignment.setVisibility(View.INVISIBLE);
+            lblType.setVisibility(View.INVISIBLE);
+            ddlType.setVisibility(View.INVISIBLE);
+            //tabListView.setVisibility(View.INVISIBLE);
+        }
+
+
     }
 
     public void emptyAssignments() {
@@ -230,9 +258,12 @@ public class ReviewEvidence extends AppCompatActivity {
         if(type.equals("photo")){
             Log.v(TAG, "Sending to photo activity");
             intent = new Intent(ReviewEvidence.this, ViewAssignment.class);
-        } else {
+        } else if(type.equals("video")) {
             Log.v(TAG, "Sending to video activity");
             intent = new Intent(ReviewEvidence.this, ReviewVideo.class);
+        } else {
+            Log.v(TAG, "Sending to video activity");
+            intent = new Intent(ReviewEvidence.this, ReviewAudio.class);
         }
         intent.putExtra("name", studentName);
         intent.putExtra("assignment", assignmentName);

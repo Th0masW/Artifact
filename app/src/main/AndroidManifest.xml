@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -42,7 +44,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ViewAssignment" />
         <activity android:name=".RecordVideo" />
-        <activity android:name=".ReviewVideo"></activity>
+        <activity android:name=".ReviewVideo" />
+        <activity android:name=".AudioSelectStudent" />
+        <activity android:name=".ReviewAudio"></activity>
     </application>
 
 </manifest>

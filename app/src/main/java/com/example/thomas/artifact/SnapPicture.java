@@ -136,8 +136,7 @@ public class SnapPicture extends AppCompatActivity {
             // adjust button visibility
             buttonVisibility(true);
             assignmentVisibility(true);
-            // save picture
-            //savePicture(photo);
+
         }
     }
     private void uploadToDB() {
