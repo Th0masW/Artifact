@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class EditStudentName extends AppCompatActivity {
 
@@ -22,7 +23,6 @@ public class EditStudentName extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private DatabaseReference studentDB;
     private DatabaseReference keyDB;
-
     private String studentName;
     private String studentKey;
 
@@ -63,6 +63,11 @@ public class EditStudentName extends AppCompatActivity {
         Log.v("AddStudents", "Student name: " + name);
 
          studentDB.child(studentKey).setValue(name);
+
+         //give Toast that name was added
+         android.widget.Toast.makeText(EditStudentName.this,name + " has been added", Toast.LENGTH_LONG).show();
+         //send to main page
+         sendToMain();
 
     }
     @Override
